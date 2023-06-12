@@ -28,7 +28,7 @@ body {
   font-size: 12px;
   font-weight: bold;
 }
-.sub-tile {
+.sub-title {
   color: #272727;
   font-family: Almarai;
   font-size: 21px;
@@ -168,7 +168,7 @@ body {
   letter-spacing: 0;
   line-height: 39px;
 }
-.dicount-img {
+.discount-img {
   max-height: 130px;
   max-width: 80%;
 }
