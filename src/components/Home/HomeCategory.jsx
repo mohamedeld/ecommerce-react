@@ -23,7 +23,7 @@ const HomeCategory = () => {
             <Row className="my-2 d-flex justify-content-between align-items-center">
             {
                 categories.map((category,index)=>(
-                    <CategoryCard img={category.img} background={category.background} title={category.title} index={index}/>
+                    <CategoryCard img={category.img} background={category.background} title={category.title} key={index}/>
                 ))
             }
             </Row>
