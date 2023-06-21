@@ -31,6 +31,26 @@ const LoginPage = () => {
               </NavLink>
             </label>
           </Col>
+          <label className="mx-auto my-4 d-flex">
+            <NavLink to="/admin/products" style={{ textDecoration: "none" }}>
+              <span
+                style={{ cursor: "pointer", textDecoration: "none" }}
+                className="text-danger"
+              >
+                Admin
+              </span>
+            </NavLink>
+          </label>
+          <label className="mx-auto my-4 d-flex">
+            <NavLink to="/user/allorders" style={{ textDecoration: "none" }}>
+              <span
+                style={{ cursor: "pointer", textDecoration: "none" }}
+                className="text-danger"
+              >
+                user
+              </span>
+            </NavLink>
+          </label>
         </Row>
       </Container>
     </div>

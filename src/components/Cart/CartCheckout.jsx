@@ -16,7 +16,7 @@ const CartCheckout = () => {
             34000 Pounds
           </div>
           <NavLink
-            to="/order/paymethoud"
+            to="/order/paymethod"
             style={{ textDecoration: "none" }}
             className="product-cart-add  d-inline "
           >
