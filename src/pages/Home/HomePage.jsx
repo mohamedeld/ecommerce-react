@@ -11,7 +11,7 @@ const HomePage = () => {
         
         <Slider/>
         <HomeCategory/>
-        <ProductCartContainer title={"Best Seller"} btntitle={"More"}/>
+        <ProductCartContainer title={"Best Seller"} btntitle={"More"} pathText={"/products"}/>
         <Discount title={"Up to 30% discount on laptops"}/>
         <ProductCartContainer title={"High Rating"} btntitle={"More"}/>
         <BrandCardContainer title={"Brands"} btntitle={"More"}/>

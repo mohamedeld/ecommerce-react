@@ -1,5 +1,6 @@
 import { Card, Col } from "react-bootstrap";
-import favoff from "../../assets/images/fav-off.png";
+import {NavLink} from "react-router-dom"; 
+import favoff from "../../assets/images/fav_off.png";
 import rate from "../../assets/images/rate.png";
 import prod1 from "../../assets/images/prod1.png";
 const ProductCart = () => {
@@ -17,9 +18,9 @@ const ProductCart = () => {
             boxShadow: "0 2px 2px 0 rgba(151,151,151,0.5)",
           }}
         >
-          {/* <Link to="/products/:id" style={{ textDecoration: 'none' }}>
-    </Link> */}
+          <NavLink to="/products/:id" style={{ textDecoration: 'none' }}>
     <Card.Img style={{ height: "228px", width: "100%" }} src={prod1} />
+    </NavLink>
           <div className="d-flex justify-content-end mx-2">
             <img
               src={favoff}

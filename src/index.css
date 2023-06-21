@@ -234,7 +234,7 @@ body {
 /* products details page */
 .product-gallary-card {
   height: 470px !important;
-  width: 370px;
+  width: 370px ;
   border-radius: 29px;
   background-color: #ffffff;
 }
@@ -246,7 +246,7 @@ body {
   font-weight: bold;
   letter-spacing: 0;
   line-height: 23px;
-  text-align: right;
+  text-align: left;
 }
 
 .cat-title {
@@ -308,7 +308,7 @@ body {
 .product-cart-add {
   cursor: pointer;
   text-align: center;
-  height: 45px;
+  /* height: 45px; */
   border-radius: 9px;
   border: none;
   background-color: #272727;
@@ -406,7 +406,7 @@ body {
   font-weight: 800;
   letter-spacing: 0;
   line-height: 28px;
-  text-align: right;
+  text-align: left;
 }
 .cart-item-body {
   height: 229px;
@@ -645,7 +645,7 @@ body {
   font-weight: bold;
   letter-spacing: 0;
   line-height: 20px;
-  text-align: right;
+  text-align: left;
 }
 .filter-sub {
   color: #555550;
@@ -653,6 +653,6 @@ body {
   font-size: 12px;
   letter-spacing: 0;
   line-height: 17px;
-  text-align: center;
+  text-align: left;
 }
 /* end filter */

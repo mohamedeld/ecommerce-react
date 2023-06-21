@@ -1,4 +1,4 @@
-import { Container,Row } from "react-bootstrap"
+import { Col, Container,Row } from "react-bootstrap"
 import SubTitle from "../Common/SubTitle"
 import CategoryCard from "../Category/CategoryCard"
 import sale from '../../assets/images/sale.png';
@@ -18,18 +18,27 @@ const HomeCategory = () => {
     ])
   return (
     <>
-        <Container>
-            <SubTitle title={"Categories"} btntitle={"more"}/>
-            <Row className="my-2 d-flex justify-content-between align-items-center">
-            {
-                categories.map((category,index)=>(
-                    <CategoryCard img={category.img} background={category.background} title={category.title} key={index}/>
-                ))
-            }
-            </Row>
-        </Container>
+      <Container>
+        <SubTitle
+          title={"Categories"}
+          btntitle={"more"}
+          pathText={"/all-categories"}
+        />
+        <Row className="my-2 d-flex justify-content-between align-items-center">
+          
+            {categories.map((category, index) => (
+              <CategoryCard
+                img={category.img}
+                background={category.background}
+                title={category.title}
+                key={index}
+              />
+            ))}
+          
+        </Row>
+      </Container>
     </>
-  )
+  );
 }
 
 export default HomeCategory
