@@ -1,6 +1,7 @@
-import baseURL from "../../Api/baseURL";
+
+import {  useCreateDataWithImage } from "../../hooks/useCreateData";
 import { useGetData } from "../../hooks/useGetData";
-import { GET_ALL_CATEGORY, GET_ERROR } from "../type";
+import { CREATE_CATEGORY, GET_ALL_CATEGORY, GET_ERROR } from "../type";
 export const getAllCategory =(limit)=> async(dispatch)=>{
     try{
         //const response = await baseURL.get("/api/v1/categories");
@@ -32,3 +33,20 @@ export const getAllCategoryPage = (page) => async (dispatch) => {
     });
   }
 };
+
+
+export const createCategory = (formData)=> async (dispatch)=>{
+    try{
+        const response = await useCreateDataWithImage(`/api/v1/categories`,formData);
+        dispatch({
+            type:CREATE_CATEGORY,
+            payload:response,
+            loading:true
+        })
+    }catch(err){
+        dispatch({
+            type:GET_ERROR,
+            payload:err
+        })
+    }
+}
