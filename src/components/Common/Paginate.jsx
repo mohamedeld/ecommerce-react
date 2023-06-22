@@ -1,9 +1,10 @@
 
 import ReactPaginate from "react-paginate";
 
-const Paginate = () => {
-    const handlePageClick = ()=> {}
-    let pageCount = 100;
+const Paginate = ({ pageCount,onPress }) => {
+  const handlePageClick = (data) => {
+    onPress(data.selected + 1);
+  };
   return (
     <div className="py-5">
       <ReactPaginate
@@ -28,6 +29,6 @@ const Paginate = () => {
       />
     </div>
   );
-}
+};
 
 export default Paginate

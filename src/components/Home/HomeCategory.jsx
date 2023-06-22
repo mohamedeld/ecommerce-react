@@ -1,21 +1,26 @@
-import { Col, Container,Row } from "react-bootstrap"
+import { useEffect } from "react";
+import { Container,Row, Spinner } from "react-bootstrap"
 import SubTitle from "../Common/SubTitle"
 import CategoryCard from "../Category/CategoryCard"
-import sale from '../../assets/images/sale.png';
-import clothe from '../../assets/images/clothe.png';
-import cat2 from '../../assets/images/cat2.png';
-import labtop from '../../assets/images/labtop.png';
-import pic from '../../assets/images/pic.png';
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getAllCategory } from "../../redux/actions/categoryAction";
 
 const HomeCategory = () => {
-    const [categories,setCategories] = useState([
-        {img:labtop,background:"#f4dba4",title:"PC"},
-        {img:sale,background:"#f4dba4",title:"SALE"},
-        {img:clothe,background:"#0034ff",title:"Clothes"},
-        {img:cat2,background:"#f4dba4",title:"PC"},
-        {img:pic,background:"#ff6262",title:"PC"},
-    ])
+    const colors = [
+      "#f4dba4",
+      "#0034ff",
+      "#ff6262",
+      "#FFD3E8",
+      "#F4DBA5",
+      "#55CFDF",
+    ];
+    const dispatch = useDispatch();
+    useEffect(()=>{
+      dispatch(getAllCategory())
+    },[])
+    const categories = useSelector((state) => state.allCategory.category);
+    const loading = useSelector((state) => state.allCategory.loading);
   return (
     <>
       <Container>
@@ -26,14 +31,17 @@ const HomeCategory = () => {
         />
         <Row className="my-2 d-flex justify-content-between align-items-center">
           
-            {categories.map((category, index) => (
+            {loading === false?(
+              categories.data ? (categories.data.slice(0,5).map(category => (
               <CategoryCard
-                img={category.img}
-                background={category.background}
-                title={category.title}
-                key={index}
+                img={category.image}
+                background={colors[Math.floor(Math.random() * 5) + 1]}
+                title={category.name}
+                key={category._id}
               />
-            ))}
+            ))):<h4>No Categories</h4>
+            ):<Spinner animation="border" variant="primary"></Spinner>
+            }
           
         </Row>
       </Container>

@@ -7,7 +7,7 @@ const CategoryCard = ({img,background,title}) => {
             <div className="allCard mb-3">
                 <div className="category-card" style={{backgroundColor:`${background}`}}>{" "}
                 </div>
-                <img src={img} alt="category" style={{height:"120px", objectFit:"cover"}}/>
+                <img src={img} alt="category" style={{width:"100px", objectFit:"cover"}}/>
                 <p className="category-card-text my-2">{title}</p>
             </div>
         </Col>

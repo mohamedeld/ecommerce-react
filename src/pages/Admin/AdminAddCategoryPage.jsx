@@ -1,6 +1,6 @@
 import {Container,Row,Col} from "react-bootstrap";
 import AdminSidebar from "../../components/Admin/AdminSidebar";
-import Paginate from "../../components/Common/Paginate";
+
 import AdminAddCategory from "../../components/Admin/AdminAddCategory";
 const AdminAddCategoryPage = () => {
   return (
@@ -12,7 +12,7 @@ const AdminAddCategoryPage = () => {
           </Col>
           <Col sm="9" xs="10" md="10">
             <AdminAddCategory />
-            <Paginate />
+            
           </Col>
         </Row>
       </Container>
