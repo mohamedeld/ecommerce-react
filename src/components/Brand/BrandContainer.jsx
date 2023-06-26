@@ -1,36 +1,29 @@
-import {useState} from 'react';
-import {Container,Row} from "react-bootstrap";
-import brand1 from "../../assets/images/brand1.png";
-import brand2 from "../../assets/images/brand2.png";
-import brand3 from "../../assets/images/brand3.png";
-import brand4 from "../../assets/images/brand1.png";
+
+import {Container,Row, Spinner} from "react-bootstrap";
+
 import BrandCard from './BrandCard';
+import Paginate from "../Common/Paginate";
+import AllBrandHook from "../../hook/brand/AllBrandHook";
 
 const BrandContainer = () => {
-    const [brands, setBrands] = useState([
-      { img: brand1 },
-      { img: brand2 },
-      { img: brand3 },
-      { img: brand4 },
-      { img: brand1 },
-      { img: brand2 },
-      { img: brand3 },
-      { img: brand4 },
-      { img: brand1 },
-      { img: brand2 },
-      { img: brand3 },
-      { img: brand4 },
-    ]);
+    const [brands, loading, pageCount, getPage] = AllBrandHook;
   return (
     <>
       <Container>
-        
         <Row className="my-1 d-flex justify-content-between">
-          {brands.map((brand, index) => (
-            <BrandCard img={brand.img} key={index} />
-          ))}
-          <BrandCard img={brand1} />
+          {loading === false ? (
+            brands.data ? (
+              brands.data.map((brand, index) => (
+                <BrandCard img={brand.img} key={index} />
+              ))
+            ) : (
+              <h4>there are no data</h4>
+            )
+          ) : (
+            <Spinner animation="border" variant="primary" />
+          )}
         </Row>
+        <Paginate onPress={getPage} pageCount={pageCount} />
       </Container>
     </>
   );

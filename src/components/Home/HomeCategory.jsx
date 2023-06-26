@@ -1,26 +1,11 @@
-import { useEffect } from "react";
+
 import { Container,Row, Spinner } from "react-bootstrap"
 import SubTitle from "../Common/SubTitle"
 import CategoryCard from "../Category/CategoryCard"
-import { useDispatch, useSelector } from "react-redux";
-
-import { getAllCategory } from "../../redux/actions/categoryAction";
+import HomeCategoryHook from "../../hook/Category/HomeCategoryHook"
 
 const HomeCategory = () => {
-    const colors = [
-      "#f4dba4",
-      "#0034ff",
-      "#ff6262",
-      "#FFD3E8",
-      "#F4DBA5",
-      "#55CFDF",
-    ];
-    const dispatch = useDispatch();
-    useEffect(()=>{
-      dispatch(getAllCategory())
-    },[])
-    const categories = useSelector((state) => state.allCategory.category);
-    const loading = useSelector((state) => state.allCategory.loading);
+    const [colors, categories, loading] = HomeCategoryHook(); 
   return (
     <>
       <Container>
