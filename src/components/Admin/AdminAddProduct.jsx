@@ -1,54 +1,114 @@
-import React from "react";
-import {Row,Col} from "react-bootstrap";
+import MultiImageInput from "react-multiple-image-input";
+import { Row, Col,Spinner } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import "babel-polyfill";
 import Multiselect from "multiselect-react-dropdown";
 import avatar from "../../assets/images/avatar.png";
 import add from "../../assets/images/add.png";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategory } from "../../redux/actions/categoryAction";
+import { getAllBrand } from "../../redux/actions/brandAction";
 const AdminAddProduct = () => {
-    const onSelect = () => {};
-    const onRemove = () => {};
-
-    const options = [
-      { name: "First Category", id: 1 },
-      { name: "Second Category", id: 2 },
-    ];
+  const crop = {
+    unit: "%",
+    aspect: 4 / 3,
+    width: "100",
+  };
+  const [images, setImages] = useState([]);
+  const [prodName,setProdName] = useState('');
+  const [prodDescription, setProdDescription] = useState("");
+  const [priceBefore, setPriceBefore] = useState(0);
+  const [priceAfter, setPriceAfter] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [categoryId, setCategoryId] = useState('');
+  const [brandId,setBrandId] = useState("");
+  const [subCategoryId, setSubCategoryId] = useState([]);
+  const [selectedSubCategoryId,setSelectedSubCategoryId] = useState([]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllCategory());
+    dispatch(getAllBrand());
+  },[])
+  const categories = useSelector((state) => state.allCategory.category);
+  const brands = useSelector((state) => state.allBrand.brand);
+  const onSelect = () => {};
+  const onRemove = () => {};
+  const onSelectCategory = (event)=>{
+    setCategoryId(event.target.value);
+  }
+  const onSelectBrand = (event)=>{
+    setBrandId(event.target.value);
+  }
+  const options = [
+    { name: "First Category", id: 1 },
+    { name: "Second Category", id: 2 },
+  ];
   return (
     <>
       <Row className="justify-content-start ">
         <div className="admin-content-text pb-4">Add New Product</div>
         <Col sm="8">
           <div className="text-form pb-2"> Product Images </div>
-          <img src={avatar} alt="" height="100px" width="120px" />
+
+          <MultiImageInput
+            images={images}
+            setImages={setImages}
+            cropConfig={{ crop, ruleOfThirds: true }}
+            theme={"light"}
+            max={5}
+          />
+
           <input
             type="text"
             className="input-form d-block mt-3 px-3"
             placeholder="Product Name"
+            value={prodName}
+            onChange={(e) => setProdName(e.target.value)}
           />
           <textarea
             className="input-form-area p-2 mt-3"
             rows="4"
             cols="50"
             placeholder="Product Description"
+            value={prodDescription}
+            onChange={(e) => setProdDescription(e.target.value)}
           />
           <input
             type="number"
             className="input-form d-block mt-3 px-3"
             placeholder="Price Before Discount"
+            value={priceBefore}
+            onChange={(e) => setPriceBefore(e.target.value)}
           />
           <input
             type="number"
             className="input-form d-block mt-3 px-3"
             placeholder="Product Price"
+            value={priceAfter}
+            onChange={(e) => setPriceAfter(e.target.value)}
+          />
+          <input
+            type="number"
+            className="input-form d-block mt-3 px-3"
+            placeholder="Product Quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
           />
           <select
-            name="languages"
-            id="lang"
+            name="categories"
             className="select input-form-area mt-3 px-2 "
+            onChange={onSelectCategory}
           >
-            <option value="val">Main Category</option>
-            <option value="val">First Category</option>
-            <option value="val2">Second Category</option>
-            <option value="val2">Third Category</option>
-            <option value="val2">Fourth Category</option>
+            <option value="val">Choose Main Category</option>
+            {categories.data ? (
+              categories.data.map((category) => (
+                <option value={category._id} key={category._id}>
+                  {category.name}
+                </option>
+              ))
+            ) : (
+              <Spinner animation="border" variant="primary" />
+            )}
           </select>
 
           <Multiselect
@@ -58,17 +118,24 @@ const AdminAddProduct = () => {
             onSelect={onSelect}
             onRemove={onRemove}
             displayValue="name"
-            style={{ color: "red" ,textAlign:"left"}}
+            style={{ color: "red", textAlign: "left" }}
           />
           <select
             name="brand"
             id="brand"
+            onChange={onSelectBrand}
             className="select input-form-area mt-3 px-2 "
           >
             <option value="val">Brand</option>
-            <option value="val2">Classification first brand</option>
-            <option value="val2">Classification second brand</option>
-            <option value="val2">Classification third brand</option>
+            {brands.data ? (
+              brands.data.map((brand) => (
+                <option value={brand._id} key={brand._id}>
+                  {brand.name}
+                </option>
+              ))
+            ) : (
+              <Spinner animation="border" variant="primary" />
+            )}
           </select>
           <div className="text-form mt-3 ">Available colors of the product</div>
           <div className="mt-1 d-flex">
@@ -95,6 +162,6 @@ const AdminAddProduct = () => {
       </Row>
     </>
   );
-}
+};
 
-export default AdminAddProduct
+export default AdminAddProduct;
