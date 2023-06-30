@@ -2,12 +2,14 @@ import MultiImageInput from "react-multiple-image-input";
 import { Row, Col,Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import "babel-polyfill";
+import { CompactPicker } from "react-color";
 import Multiselect from "multiselect-react-dropdown";
 import avatar from "../../assets/images/avatar.png";
 import add from "../../assets/images/add.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory } from "../../redux/actions/categoryAction";
 import { getAllBrand } from "../../redux/actions/brandAction";
+import { getOneCategory } from "../../redux/actions/subCategoryAction";
 const AdminAddProduct = () => {
   const crop = {
     unit: "%",
@@ -24,6 +26,10 @@ const AdminAddProduct = () => {
   const [brandId,setBrandId] = useState("");
   const [subCategoryId, setSubCategoryId] = useState([]);
   const [selectedSubCategoryId,setSelectedSubCategoryId] = useState([]);
+  const [selectColorPicker,setSelectColorPicker] = useState(false);
+  const [selectedColors , setSelectedColors] = useState([]);
+  const [options,setOptions]= useState([]);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllCategory());
@@ -31,18 +37,48 @@ const AdminAddProduct = () => {
   },[])
   const categories = useSelector((state) => state.allCategory.category);
   const brands = useSelector((state) => state.allBrand.brand);
-  const onSelect = () => {};
-  const onRemove = () => {};
-  const onSelectCategory = (event)=>{
-    setCategoryId(event.target.value);
+  const subCategories = useSelector((state) => state.subCategory.subcategory);
+  const onSelect = (selectedList) => {
+    setSelectedSubCategoryId(selectedList);
+  };
+  const onRemove = (selectedList) => {
+    setSelectedSubCategoryId(selectedList);
+  };
+  const onSelectCategory =async (event)=>{
+    try{
+      if (event.target.value === 0) {
+        return;
+      }
+      await dispatch(getOneCategory(event.target.value));
+      setCategoryId(event.target.value);
+    }catch(err){
+      console.log(err);
+    }
+    
   }
+  useEffect(() => {
+    if(categoryId !== 0){
+      if(subCategories.data){
+        setOptions(subCategories.data)
+      }
+    }
+  }, [categoryId]);
   const onSelectBrand = (event)=>{
     setBrandId(event.target.value);
   }
-  const options = [
-    { name: "First Category", id: 1 },
-    { name: "Second Category", id: 2 },
-  ];
+  const handleChangeComplete = (color)=>{
+    setSelectedColors([...selectedColors, color.hex]);
+    setSelectColorPicker(!selectColorPicker)
+  }
+  const removeColor = (color)=>{
+    const newColors = selectedColors.filter((e)=> e !== color);
+    setSelectedColors(newColors);
+  }
+  
+  // const options = [
+  //   { name: "First Category", id: 1 },
+  //   { name: "Second Category", id: 2 },
+  // ];
   return (
     <>
       <Row className="justify-content-start ">
@@ -139,19 +175,25 @@ const AdminAddProduct = () => {
           </select>
           <div className="text-form mt-3 ">Available colors of the product</div>
           <div className="mt-1 d-flex">
-            <div
-              className="color ms-2 border  mt-1"
-              style={{ backgroundColor: "#E52C2C" }}
-            ></div>
-            <div
-              className="color ms-2 border mt-1 "
-              style={{ backgroundColor: "white" }}
-            ></div>
-            <div
-              className="color ms-2 border  mt-1"
-              style={{ backgroundColor: "black" }}
-            ></div>
-            <img src={add} alt="" width="30px" height="35px" className="" />
+          {
+            selectedColors.length >=1 ? (
+              selectedColors.map((color,index)=>(
+                <div
+                  key={index}
+                  onClick={()=> removeColor(color)}
+                  className="color ms-2 border  mt-1"
+                  style={{ backgroundColor: color }}
+                ></div>
+              ))
+            ):null
+          }
+            
+            
+            <img src={add} alt="" width="30px" height="35px" style={{cursor:"pointer"}} onClick={()=> setSelectColorPicker(!selectColorPicker)}/>
+            {
+              selectColorPicker === true ? (<CompactPicker onChangeComplete={handleChangeComplete}/>):null
+            }
+            
           </div>
         </Col>
       </Row>
