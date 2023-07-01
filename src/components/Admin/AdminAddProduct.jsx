@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory } from "../../redux/actions/categoryAction";
 import { getAllBrand } from "../../redux/actions/brandAction";
 import { getOneCategory } from "../../redux/actions/subCategoryAction";
+import { CreateProduct } from "../../redux/actions/productAction";
+import notify from "../../hook/useNotification";
+import { ToastContainer } from "react-toastify";
 const AdminAddProduct = () => {
   const crop = {
     unit: "%",
@@ -29,6 +32,7 @@ const AdminAddProduct = () => {
   const [selectColorPicker,setSelectColorPicker] = useState(false);
   const [selectedColors , setSelectedColors] = useState([]);
   const [options,setOptions]= useState([]);
+  const [loading,setLoading]= useState(true);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -57,10 +61,8 @@ const AdminAddProduct = () => {
     
   }
   useEffect(() => {
-    if(categoryId !== 0){
-      if(subCategories.data){
-        setOptions(subCategories.data)
-      }
+    if (categoryId != 0 && subCategories && subCategories.data) {
+        setOptions(subCategories.data);
     }
   }, [categoryId]);
   const onSelectBrand = (event)=>{
@@ -74,13 +76,81 @@ const AdminAddProduct = () => {
     const newColors = selectedColors.filter((e)=> e !== color);
     setSelectedColors(newColors);
   }
-  
+  //to convert base 64 image to file 
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  }
+
+
+  // handle submit button
+
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    if(prodName === "" || prodDescription === "" || images.length<=0 || priceBefore <=0 || categoryId === 0){
+      notify("please enter data","warn");
+      return;
+    }
+    const imgCover = dataURLtoFile(images[0],Math.random()+".png");
+
+    const itemImages = Array.from(Array(Object.keys(images).length).keys()).map((item,index)=>{
+      return dataURLtoFile(images[index], Math.random() + ".png");
+    })
+
+    const formData= new FormData();
+    formData.append("title", prodName);
+    formData.append("description", prodDescription);
+    formData.append("quantity",quantity);
+    formData.append("price",priceBefore);
+    formData.append("imageCover", imgCover);
+    formData.append("category",categoryId);
+    formData.append("brand", brandId);
+    selectedColors.map(color=> formData.append("availableColors",color));
+    selectedSubCategoryId.map((subId) => formData.append("subcategory", subId._id));
+    itemImages.map(item=> formData.append("images",item));
+    setLoading(true);
+    await dispatch(CreateProduct(formData));
+    setLoading(false);
+  };
+  const products = useSelector(state=>state.allProduct.products);
+  useEffect(()=>{
+    if(loading === false){
+      setProdName("");
+      setProdDescription("");
+      setSelectedColors([]);
+      setCategoryId(0);
+      setImages([]);
+      setPriceAfter(0);
+      setPriceBefore(0);
+      setQuantity(0);
+      setBrandId('');
+      setSelectedSubCategoryId([]);
+      setTimeout(() => setLoading(true), 1500);
+      if(products){
+        if(products.status === 201){
+          notify("your data was added","success")
+        }else{
+          notify("there is an error","error");
+        }
+      }
+    }
+  },[loading])
   // const options = [
   //   { name: "First Category", id: 1 },
   //   { name: "Second Category", id: 2 },
   // ];
   return (
     <>
+    <ToastContainer/>
       <Row className="justify-content-start ">
         <div className="admin-content-text pb-4">Add New Product</div>
         <Col sm="8">
@@ -199,7 +269,7 @@ const AdminAddProduct = () => {
       </Row>
       <Row>
         <Col sm="8" className="d-flex justify-content-end ">
-          <button className="btn-save d-inline mt-2 ">Save Changes</button>
+          <button onClick={handleSubmit} className="btn-save d-inline mt-2 ">Save Changes</button>
         </Col>
       </Row>
     </>
