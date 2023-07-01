@@ -1,23 +1,27 @@
 import {Row,Col} from "react-bootstrap";
-const ProductDescription = () => {
+import ViewProductDetailsHook from "../../hook/product/ViewProductDetailsHook";
+const ProductDescription = ({id}) => {
+  const [item, images, categories, brands] = ViewProductDetailsHook(id);
   return (
     <>
       <div>
         <Row className="mt-2">
-          <div className="cat-text">Electronics :</div>
+          <div className="cat-text">{categories.name} :</div>
         </Row>
         <Row>
           <Col md="8">
             <div className="cat-title d-inline">
-              iPhone XR 128GB 4G LTE With VTime (Product) Red{" "}
-              <div className="cat-rate d-inline mx-3">4.5</div>
+              {item.title}{" "}
+              <div className="cat-rate d-inline mx-3">
+                {item.ratingsQuantity}
+              </div>
             </div>
           </Col>
         </Row>
         <Row>
           <Col md="8" className="mt-4">
             <div className="cat-text d-inline">Brand :</div>
-            <div className="barnd-text d-inline mx-1">Samsung </div>
+            <div className="barnd-text d-inline mx-1">{brands.name} </div>
           </Col>
         </Row>
         <Row>
@@ -61,7 +65,7 @@ const ProductDescription = () => {
               34000 Pound
             </div>
             <div className="product-cart-add px-3 py-3 d-inline mx-3">
-              Add To Cart 
+              Add To Cart
             </div>
           </Col>
         </Row>

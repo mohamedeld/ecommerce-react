@@ -6,18 +6,10 @@ import mobile1 from "../../assets/images/mobile1.png";
 import mobile2 from "../../assets/images/mobile2.png";
 import RightButton from "./RightButton";
 import LeftButton from "./LeftButton";
-const ProductGallery = () => {
-  const images = [
-    {
-      original: `${mobile1}`,
-    },
-    {
-      original: `${mobile1}`,
-    },
-    {
-      original: `${mobile2}`,
-    },
-  ];
+import ViewProductDetailsHook from "../../hook/product/ViewProductDetailsHook";
+const ProductGallery = ({id}) => {
+  const [item,images] = ViewProductDetailsHook(id);
+  
   return (
     <div className="product-gallary-card  d-flex justfy-content-center align-items-center mt-2">
       <ImageGallery

@@ -5,15 +5,15 @@ import RateContainer from "../Rate/RateContainer";
 import ProductCartContainer from "./ProductCartContainer";
 
 
-const ProductDetails = () => {
+const ProductDetails = ({id}) => {
   return (
     <>
       <Row className="py-5">
         <Col lg="4">
-          <ProductGallery />
+          <ProductGallery id={id} />
         </Col>
         <Col lg="8">
-          <ProductDescription />
+          <ProductDescription id={id} />
         </Col>
       </Row>
       <Row>
@@ -23,7 +23,11 @@ const ProductDetails = () => {
       </Row>
       <Row>
         <Col>
-          <ProductCartContainer title={"Products you may like"} btntitle={"more"} pathText={"/products"}  />
+          <ProductCartContainer
+            title={"Products you may like"}
+            btntitle={"more"}
+            pathText={"/products"}
+          />
         </Col>
       </Row>
     </>

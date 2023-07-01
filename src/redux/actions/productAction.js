@@ -1,5 +1,6 @@
 import { useCreateDataWithImage } from "../../hooks/useCreateData"
-import { CREATE_PRODUCT, GET_ERROR } from "../type"
+import { useGetData } from "../../hooks/useGetData";
+import { CREATE_PRODUCT, GET_ALL_PRODUCT, GET_ERROR, GET_ONE_PRODUCT } from "../type"
 
 
 export const CreateProduct = (data)=> async (dispatch)=>{
@@ -14,4 +15,37 @@ export const CreateProduct = (data)=> async (dispatch)=>{
         dispatch({ type: GET_ERROR, payload:err})
     }
     
+}
+
+export const getAllProducts = ()=> async (dispatch)=>{
+    try{
+        const response = await useGetData(`/api/v1/products`);
+        dispatch({
+            type:GET_ALL_PRODUCT,
+            payload:response,
+            loading:true
+        })
+    }catch(err){
+        dispatch({
+            type: GET_ERROR,
+            payload:err
+        })
+    }
+}
+export const getOneProducts = (id)=> async (dispatch)=>{
+    try {
+      const response = await useGetData(
+        `/api/v1/products/${id}`
+      );
+      dispatch({
+        type: GET_ONE_PRODUCT,
+        payload: response,
+        loading: true,
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_ERROR,
+        payload: err,
+      });
+    }
 }

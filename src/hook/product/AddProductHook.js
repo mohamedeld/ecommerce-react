@@ -122,6 +122,10 @@ const onChangeSelectedColorPicker = (e) => {
       notify("please enter data", "warn");
       return;
     }
+    if(priceBefore > priceAfter){
+        notify("price before should be less than price after","warn");
+        return;
+    }
     const imgCover = dataURLtoFile(images[0], Math.random() + ".png");
 
     const itemImages = Array.from(Array(Object.keys(images).length).keys()).map(
