@@ -10,6 +10,7 @@ const ProductDetailsPage = () => {
         <CategoryHeader/>
         <Container>
             <ProductDetails id={id}/>
+            
         </Container>
     </div>
   )

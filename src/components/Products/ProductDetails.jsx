@@ -3,9 +3,11 @@ import ProductGallery from "./ProductGallery"
 import ProductDescription from "./ProductDescription";
 import RateContainer from "../Rate/RateContainer";
 import ProductCartContainer from "./ProductCartContainer";
+import ViewProductDetailsHook from "../../hook/product/ViewProductDetailsHook";
 
 
 const ProductDetails = ({id}) => {
+  const [item, images, categories, brands,products] = ViewProductDetailsHook(id);
   return (
     <>
       <Row className="py-5">
@@ -27,6 +29,7 @@ const ProductDetails = ({id}) => {
             title={"Products you may like"}
             btntitle={"more"}
             pathText={"/products"}
+            products = {products}
           />
         </Col>
       </Row>

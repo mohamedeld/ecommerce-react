@@ -26,18 +26,14 @@ const ProductDescription = ({id}) => {
         </Row>
         <Row>
           <Col md="8" className="mt-1 d-flex">
-            <div
-              className="color ms-2 border"
-              style={{ backgroundColor: "#E52C2C" }}
-            ></div>
-            <div
-              className="color ms-2 border "
-              style={{ backgroundColor: "white" }}
-            ></div>
-            <div
-              className="color ms-2 border"
-              style={{ backgroundColor: "black" }}
-            ></div>
+            {item.availableColors
+              ? item.availableColors.map((color, index) => (
+                  <div key={index}
+                    className="color ms-2 border"
+                    style={{ backgroundColor: color }}
+                  ></div>
+                ))
+              : null}
           </Col>
         </Row>
 
@@ -47,22 +43,14 @@ const ProductDescription = ({id}) => {
         <Row className="mt-2">
           <Col md="10">
             <div className="product-description d-inline">
-              Features dual SIM physical card and e-SIM You can easily unlock
-              your iPhone and log in to apps, accounts, etc. Face ID is the
-              fastest and most secure facial authentication feature Features A12
-              Bionic chip, which is the smartest and most powerful chip in
-              smartphones Formed over World famous cameras A new era of
-              photography Powered by the innovative ISP sensor and neural
-              engine, you can capture images like never before Single-lens
-              camera brings the people in the front into sharp focus against the
-              blurred background Overview
+              {item.description}
             </div>
           </Col>
         </Row>
         <Row className="mt-4">
           <Col md="12">
             <div className="product-price d-inline px-3 py-3 border">
-              34000 Pound
+              {item.price} Pound
             </div>
             <div className="product-cart-add px-3 py-3 d-inline mx-3">
               Add To Cart
