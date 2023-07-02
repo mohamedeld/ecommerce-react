@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAllProducts } from "../../redux/actions/productAction";
+import { getAllProducts, getAllProductsWithPage } from "../../redux/actions/productAction";
 export const ViewSearchResultProductHook = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -13,5 +13,23 @@ export const ViewSearchResultProductHook = () => {
   } else {
     items = [];
   }
-  return [items];
+  let pagination = [];
+  if (products.paginationResult) {
+    pagination = products.paginationResult;
+  } else {
+    pagination = [];
+  }
+
+  // calculate page count
+  let pageCount = 0;
+  if (pagination) {
+    pageCount = pagination.numberOfPages;
+  } else {
+    pageCount = 0;
+  }
+
+  const onPress = async (page) => {
+    await dispatch(getAllProductsWithPage(page, 10));
+  };
+  return [items, pageCount, onPress];
 };
