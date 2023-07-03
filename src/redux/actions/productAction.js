@@ -1,7 +1,8 @@
 import { useCreateDataWithImage } from "../../hooks/useCreateData"
 import useDeleteData from "../../hooks/useDeleteData";
 import { useGetData } from "../../hooks/useGetData";
-import { CREATE_PRODUCT, DELETE_PRODUCT, GET_ALL_PRODUCT, GET_ERROR, GET_ONE_PRODUCT, GET_PRODUCTS_LIKE } from "../type"
+import { useUpdateDataWithImage } from "../../hooks/useUpdateData";
+import { CREATE_PRODUCT, DELETE_PRODUCT, GET_ALL_PRODUCT, GET_ERROR, GET_ONE_PRODUCT, GET_PRODUCTS_LIKE, UPDATE_PRODUCT } from "../type"
 
 
 export const CreateProduct = (data)=> async (dispatch)=>{
@@ -82,6 +83,22 @@ export const getProductLike = (id) => async (dispatch) => {
     });
   }
 };
+
+export const updateProduct = (id,data) => async(dispatch)=>{
+  try{
+    const response = await useUpdateDataWithImage(`/api/v1/products/${id}`,data);
+    dispatch({
+      type: UPDATE_PRODUCT,
+      payload:response,
+      loading:true
+    })
+  }catch(err){
+    dispatch({
+      type:GET_ERROR,
+      payload:err
+    })
+  }
+}
 
 export const deleteProduct = (id) => async (dispatch) => {
   try {

@@ -48,7 +48,9 @@ const AdminAllProductsCard = ({product}) => {
               <div onClick={handleShow} className="d-inline item-delete-edit">
                 Delete
               </div>
+              <NavLink to={`/admin/editproduct/${product._id}`}>
               <div className="d-inline item-delete-edit">Edit</div>
+              </NavLink>
             </Col>
           </Row>
           <NavLink
