@@ -160,10 +160,19 @@ const EditProductHook = (id) => {
       notify("price before should be less than price after", "warn");
       return;
     }
-    if(images[0].length <= 1000){
-
+    const convertURLToFile = async(url)=>{
+        const response = await fetch(url,{mode:"cors"});
+        const data = await response.blob();
+        const ext = url.split(".").pop();
+        const filename = url.split("/").pop();
+        const metadata = {type:`image/${ext}`}
+        return new File([data],Math.random(),metadata);
     }
-    const imgCover = dataURLtoFile(images[0], Math.random() + ".png");
+    let imgCover;
+    if(images[0].length <= 1000){
+        convertURLToFile(images[0]).then(val=> console.log(val)).catch(err=>console.log(err));
+    }
+    imgCover = dataURLtoFile(images[0], Math.random() + ".png");
 
     const itemImages = Array.from(Array(Object.keys(images).length).keys()).map(
       (item, index) => {
