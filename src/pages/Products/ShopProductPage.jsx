@@ -9,14 +9,16 @@ import Paginate from "../../components/Common/Paginate";
 import { ViewSearchResultProductHook } from "../../hook/product/ViewSearchResultProductHook";
 
 const ShopProductPage = () => {
-  const [items, pageCount, onPress] = ViewSearchResultProductHook();
+  const [items, pageCount, onPress, getProducts, results] =
+    ViewSearchResultProductHook();
   
   return (
     <div style={{ minHeight: "680px" }}>
       <CategoryHeader />
       <Container>
         <SearchCountResult
-          title={`There are ${items.length} products`}
+          onClick={getProducts}
+          title={`There are ${results} products`}
           sort={sort}
         />
         <Row className="d-flex flex-row">

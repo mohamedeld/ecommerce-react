@@ -1,8 +1,12 @@
 
 import UnopDropdown from "unop-react-dropdown";
 
-const SearchCountResult = ({title,sort}) => {
-    const handler = () => {}
+const SearchCountResult = ({ title, sort, onClick }) => {
+  const handler = () => {};
+  const handleClick = (key) => {
+    localStorage.setItem("sortType",key);
+    onClick();
+  };
   return (
     <>
       <div className="d-flex justify-content-between pt-3 px-2">
@@ -28,20 +32,36 @@ const SearchCountResult = ({title,sort}) => {
             hover
           >
             <div className="card-filter">
-              <div className="border-bottom card-filter-item">Best Seller</div>
-              <div className="border-bottom card-filter-item">
+              <div
+                onClick={() => handleClick("Best Seller")}
+                className="border-bottom card-filter-item"
+              >
+                Best Seller
+              </div>
+              <div
+                onClick={() => handleClick("Most Rating")}
+                className="border-bottom card-filter-item"
+              >
                 Most Rating
               </div>
-              <div className="border-bottom card-filter-item">
+              <div
+                onClick={() => handleClick("Price from older to newest")}
+                className="border-bottom card-filter-item"
+              >
                 Price from older to newest
               </div>
-              <div className=" card-filter-item">Price from newest to order</div>
+              <div
+                onClick={() => handleClick("Price from newest to order")}
+                className=" card-filter-item"
+              >
+                Price from newest to order
+              </div>
             </div>
           </UnopDropdown>
         </div>
       </div>
     </>
   );
-}
+};
 
 export default SearchCountResult

@@ -6,7 +6,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import login from "../../assets/images/login.png";
 import logo from "../../assets/images/logo.png";
 import cart from "../../assets/images/cart.png";
+import NavbarSearchHook from '../../hook/Search/NavbarSearchHook';
 const NavBarLogin = () => {
+  const [search, handleChange] = NavbarSearchHook();
+  let word = "";
+  if(localStorage.getItem("search") != null){
+    word = localStorage.getItem("search");
+  }
   return (
     <>
       <Navbar className="sticky-top" bg="dark" variant="dark" expand="sm">
@@ -23,6 +29,8 @@ const NavBarLogin = () => {
               placeholder="search"
               className="me-2 w-100 text-center"
               aria-label="Search"
+              value={word}
+              onChange={handleChange}
             />
             <Nav className="me-auto">
               <NavLink

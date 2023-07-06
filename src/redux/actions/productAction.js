@@ -50,6 +50,24 @@ export const getAllProductsWithPage = (page,limit)=> async(dispatch)=>{
     })
   }
 }
+
+
+export const getAllProductsWithSearch = (queryString) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/products?${queryString}`);
+    dispatch({
+      type: GET_ALL_PRODUCT,
+      payload: response,
+    });
+  } catch (err) {
+    dispatch({
+      type: GET_ERROR,
+      payload: err,
+    });
+  }
+};
+
+
 export const getOneProducts = (id)=> async (dispatch)=>{
     try {
       const response = await useGetData(
