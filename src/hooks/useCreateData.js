@@ -7,7 +7,7 @@ const useCreateDataWithImage = async (url, params) => {
         }
     } 
   const response = await baseUrl.post(url, params,config);
-  return response;
+  return response; 
 };
 
 const useCreateData =async (url,params)=>{

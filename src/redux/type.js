@@ -14,3 +14,4 @@ export const GET_ONE_BRAND = "GET_ONE_BRAND";
 export const GET_PRODUCTS_LIKE = "GET_PRODUCTS_LIKE";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+export const CREATE_USER = "CREATE_USER";
