@@ -4,13 +4,41 @@ import { getAllProducts, getAllProductsWithPage, getAllProductsWithSearch } from
 export const ViewSearchResultProductHook = () => {
   let limit = 6;
   const dispatch = useDispatch();
+  let priceFromString = "",
+    priceToString = "";
   const getProducts = async () => {
-    let word = "";
+    let word = "",queryCategory="",queryBrand = "",priceFrom="",priceTo="";
+    if(priceFrom === "" || priceFrom <= 0){
+      priceFromString = "";
+    }else{
+      priceFromString = `price[gt]=${priceFrom}`;
+    }
+    if(priceTo === "" || priceTo <= 0){
+      priceToString = "";
+    }else{
+      priceToString = `price[lte]=${priceTo}`;
+    }
     if(localStorage.getItem("search")!= null) {
       word = localStorage.getItem("search");
     }
+    if (localStorage.getItem("categoryChecked") != null) {
+      queryCategory = localStorage.getItem("categoryChecked");
+    } 
+    if (localStorage.getItem("brandChecked") != null){
+      queryBrand = localStorage.getItem("brandChecked");
+    } 
+    if(localStorage.getItem("priceFrom") != null){
+      priceFrom = localStorage.getItem("priceFrom");
+    }
+    if (localStorage.getItem("priceTo") != null) {
+      priceTo = localStorage.getItem("priceTo");
+    }
     sortData();
-    await dispatch(getAllProductsWithSearch(`sort=${sort}&limit=${limit}&keyword=${word}`));
+    await dispatch(
+      getAllProductsWithSearch(
+        `sort=${sort}&limit=${limit}&keyword=${word}&${queryCategory}&${queryBrand}&${priceFromString}&${priceToString}`
+      )
+    );
   };
   useEffect(() => {
     getProducts('');
@@ -63,12 +91,42 @@ export const ViewSearchResultProductHook = () => {
   
 
   const onPress = async (page) => {
-    let word='';
+    let word = "",
+      queryCategory = "",
+      queryBrand="",priceFrom="",priceTo="";
+      
+      if (priceFrom === "" || priceFrom <= 0) {
+        priceFromString = "";
+      } else {
+        priceFromString = `price[gt]=${priceFrom}`;
+      }
+      if (priceTo === "" || priceTo <= 0) {
+        priceToString = "";
+      } else {
+        priceToString = `price[lte]=${priceTo}`;
+      }
+
     if(localStorage.getItem("search")!=null){
       word = localStorage.getItem("search");
     }
+    if (localStorage.getItem("categoryChecked") != null) {
+      queryCategory = localStorage.getItem("categoryChecked");
+    }
+    if (localStorage.getItem("brandChecked") != null) {
+      queryBrand = localStorage.getItem("brandChecked");
+    }
+    if (localStorage.getItem("priceFrom") != null) {
+      priceFrom = localStorage.getItem("priceFrom");
+    }
+    if (localStorage.getItem("priceTo") != null) {
+      priceTo = localStorage.getItem("priceTo");
+    }  
     sortData();
-    await dispatch(getAllProductsWithSearch(`sort=${sort}&limit=${limit}&page=${page}&keyword=${word}`));
+    await dispatch(
+      getAllProductsWithSearch(
+        `sort=${sort}&limit=${limit}&page=${page}&keyword=${word}&${queryCategory}&${queryBrand}&${priceFromString}&${priceToString}`
+      )
+    );
   };
 
 
