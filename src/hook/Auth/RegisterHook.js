@@ -81,28 +81,28 @@ const RegisterHook = () => {
             if(response){
                 console.log(response.data);
                 
-                    // if (response.data.token) {
-                    //     console.log(response.data.token);
-                    //   localStorage.setItem("token", response.data.token);
+                    if (response.data.token) {
+                        console.log(response.data.token);
+                      localStorage.setItem("token", response.data.token);
 
-                    //   notify("email is created successfully", "success");
-                    //   setName("");
-                    //   setPhone("");
-                    //   setEmail("");
-                    //   setPassword("");
-                    //   setPasswordConfirm("");
-                    //   setTimeout(() => {
-                    //     navigate("/login");
-                    //   }, 2000);
-                    // }
-                    // if (response.data.errors) {
-                    //   if (
-                    //     response.data.errors[0].msg ===
-                    //     "E-mail is already in use"
-                    //   ) {
-                    //     notify("E-mail is already in use", "warn");
-                    //   }
-                    // }
+                      notify("email is created successfully", "success");
+                      setName("");
+                      setPhone("");
+                      setEmail("");
+                      setPassword("");
+                      setPasswordConfirm("");
+                      setTimeout(() => {
+                        navigate("/login");
+                      }, 2000);
+                    }
+                    if (response.data.errors) {
+                      if (
+                        response.data.errors[0].msg ===
+                        "E-mail is already in use"
+                      ) {
+                        notify("E-mail is already in use", "warn");
+                      }
+                    }
                
                 
             }            

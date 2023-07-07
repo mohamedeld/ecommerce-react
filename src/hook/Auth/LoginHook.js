@@ -42,8 +42,19 @@ const LoginHook = () => {
         if(response){
                 if (response.data.token) {
                   localStorage.setItem("token", response.data.token);
+                  localStorage.setItem("user",JSON.stringify(response.data.data));
+                  notify("login successfully","success");
+                  setTimeout(() => {
+                    window.location.href="/";
+                  }, 1000);
                 } else {
                   localStorage.removeItem("token");
+                   localStorage.removeItem("user");
+                }
+                if(response.data.message === "Incorrect email or password"){
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    notify("Incorrect email or password","error");
                 }
            
             

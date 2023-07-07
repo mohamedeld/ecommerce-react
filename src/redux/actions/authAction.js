@@ -1,5 +1,6 @@
 import { useCreateData } from "../../hooks/useCreateData"
-import { CREATE_USER, GET_ERROR, LOGIN_USER } from "../type"
+import { useGetDataWithToken } from "../../hooks/useGetData";
+import { CREATE_USER, GET_CURRENT_USER, GET_ERROR, LOGIN_USER } from "../type"
 
 
 export const createUser = (data) => async (dispatch)=>{
@@ -31,5 +32,20 @@ export const loginUser = (data)=>async (dispatch)=>{
             type:LOGIN_USER,
             payload:e.response,
         })
+    }
+}
+
+export const getLoggedUser = () => async (dispatch)=>{
+    try{
+        const response = await useGetDataWithToken('/api/v1/users/getMe');
+        dispatch({
+            type:GET_CURRENT_USER,
+            payload:response
+        })
+    }catch(e){
+        dispatch({
+          type: GET_CURRENT_USER,
+          payload: e.response,
+        });
     }
 }
