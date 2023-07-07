@@ -28,6 +28,7 @@ import UserEditAddressPage from './pages/User/UserEditAddressPage';
 import UserAddAddressPage from './pages/User/UserAddAddressPage';
 import UserProfilePage from './pages/User/UserProfilePage';
 import AdminEditProductPage from './pages/Admin/AdminEditProductPage';
+import ForgetPasswordPage from './pages/Auth/ForgetPasswordPage';
 function App() {
 
   return (
@@ -67,6 +68,7 @@ function App() {
           <Route path="/user/edit-address" element={<UserEditAddressPage />} />
           <Route path="/user/add-address" element={<UserAddAddressPage />} />
           <Route path="/user/profile" element={<UserProfilePage />} />
+          <Route path="/user/forget-password" element={<ForgetPasswordPage/>}/>
         </Routes>
 
         <Footer />

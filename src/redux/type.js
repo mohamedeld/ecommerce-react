@@ -17,3 +17,4 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const FORGET_PASSWORD = "FORGET_PASSWORD";
