@@ -2,6 +2,7 @@
 import { Container,Row,Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import RegisterHook from '../../hook/Auth/RegisterHook';
+
 import { ToastContainer } from 'react-toastify';
 const RegisterPage = () => {
   const [
@@ -9,7 +10,7 @@ const RegisterPage = () => {
     email,
     phone,
     password,
-    confirmPassword,
+    passwordConfirm,
     changeName,
     changeEmail,
     changePhone,
@@ -20,7 +21,7 @@ const RegisterPage = () => {
   ] = RegisterHook();
   return (
     <div style={{ minHeight: "670px" }}>
-    <ToastContainer/>
+      <ToastContainer />
       <Container style={{ minHeight: "680px" }}>
         <Row className="py-5 d-flex justify-content-center">
           <Col sm="12" className="d-flex flex-column">
@@ -56,7 +57,7 @@ const RegisterPage = () => {
             <input
               placeholder="confirm Password"
               type="password"
-              value={confirmPassword}
+              value={passwordConfirm}
               onChange={changeConfirmPassword}
               className="user-input my-3 text-center mx-auto"
             />

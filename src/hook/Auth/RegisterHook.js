@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import notify from "../../hook/useNotification";
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../../redux/actions/authAction';
+import { createUser } from "../../redux/actions/authAction";
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 const RegisterHook = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [name,setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
     const [loading,setLoading] = useState(true);
 
 
@@ -26,7 +28,7 @@ const RegisterHook = () => {
         setPassword(e.target.value);
     };
     const changeConfirmPassword = (e) => {
-        setConfirmPassword(e.target.value);
+        setPasswordConfirm(e.target.value);
     };
     
     const validationError = ()=>{
@@ -46,44 +48,64 @@ const RegisterHook = () => {
             notify("enter your password", "warn");
             return;
         }
-        if(password !== confirmPassword){
-            notify("confirm password is not matched password", "warn");
-            return;
+        if (password !== passwordConfirm) {
+          notify("confirm password is not matched password", "warn");
+          return;
         }
-        if(confirmPassword === ""){
-            notify("enter confirm password", "warn");
-            return;
+        if (passwordConfirm === "") {
+          notify("enter confirm password", "warn");
+          return;
         }
     }
+    const response = useSelector(state => state.authReducer.newuser);
+   
     const handleSubmit = async () => {
+        
         validationError();
+
         setLoading(true);
         await dispatch(
-        createUser({
+          createUser({
             name,
             email,
             password,
-            passwordConfirm: confirmPassword,
+            passwordConfirm,
             phone,
-        })
+          })
         );
         setLoading(false);
     };
-    const response = useSelector((state) => state.authReducer.createUser);
+    
     useEffect(()=>{
-        
-        if(loading === false){
+        if (loading === false) {
             if(response){
-                console.log(response);
-                if (response.data.token) {
-                  localStorage.setItem("token", response.data.token);
-                }
-                if (response.data.errors) {
-                  if (response.data.errors[0].msg === "E-mail is already in use") {
-                    notify("E-mail is already in use", "warn");
-                  }
-                }
-            }
+                console.log(response.data);
+                
+                    // if (response.data.token) {
+                    //     console.log(response.data.token);
+                    //   localStorage.setItem("token", response.data.token);
+
+                    //   notify("email is created successfully", "success");
+                    //   setName("");
+                    //   setPhone("");
+                    //   setEmail("");
+                    //   setPassword("");
+                    //   setPasswordConfirm("");
+                    //   setTimeout(() => {
+                    //     navigate("/login");
+                    //   }, 2000);
+                    // }
+                    // if (response.data.errors) {
+                    //   if (
+                    //     response.data.errors[0].msg ===
+                    //     "E-mail is already in use"
+                    //   ) {
+                    //     notify("E-mail is already in use", "warn");
+                    //   }
+                    // }
+               
+                
+            }            
         }
     },[loading])
     return [
@@ -91,7 +113,7 @@ const RegisterHook = () => {
       email,
       phone,
       password,
-      confirmPassword,
+      passwordConfirm,
       changeName,
       changeEmail,
       changePhone,
@@ -102,4 +124,4 @@ const RegisterHook = () => {
     ];
 }
 
-export default RegisterHook
+export default RegisterHook;
